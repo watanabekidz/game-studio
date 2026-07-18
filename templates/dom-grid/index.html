@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{title}}</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f0f2f5;
+    color: #333;
+    user-select: none;
+}
+.container {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    text-align: center;
+    max-width: 480px;
+    width: 100%;
+    margin: 16px;
+}
+h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+#status { font-size: 18px; color: #666; margin-bottom: 16px; min-height: 27px; }
+#board { display: inline-grid; gap: 4px; margin: 16px 0; }
+.cell {
+    width: 80px; height: 80px;
+    background: #f8f9fa;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 32px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.cell:hover { background: #e9ecef; }
+.cell.taken { cursor: default; }
+.controls { margin-top: 16px; display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+button {
+    padding: 8px 20px;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+button:hover { background: #e9ecef; }
+button.active { border-color: #339af0; color: #339af0; background: #e7f5ff; }
+{{style_overrides}}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>{{title}}</h1>
+<div id="status">Loading...</div>
+<div id="board"></div>
+<div class="controls">
+    <button id="resetBtn">↻ Reset</button>
+</div>
+</div>
+<script>
+// ── {{title}} — Game Logic ──
+// Populate this section with game-specific code.
+// Reference pattern: tic-tac-toe for grid-based DOM games.
+{{game_script}}
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "canvas-rpg",
+  "description": "Canvas 2D game with exploration, NPCs, and state management",
+  "tier": 3,
+  "type": "exploration",
+  "variables": ["title", "description", "controls", "instruction", "style_overrides", "game_script"],
+  "readme_variables": ["game_title", "game_description", "run_instructions"],
+  "libraries": ["canvas-engine.js"],
+  "target": "html"
+}

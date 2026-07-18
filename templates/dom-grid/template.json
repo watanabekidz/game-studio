@@ -1,0 +1,10 @@
+{
+  "name": "dom-grid",
+  "description": "Grid-based turn-based game using DOM elements",
+  "tier": 1,
+  "type": "turn-based",
+  "variables": ["title", "description", "style_overrides", "game_script"],
+  "readme_variables": ["game_title", "game_description", "run_instructions"],
+  "libraries": [],
+  "target": "html"
+}
