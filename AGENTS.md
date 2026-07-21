@@ -2,6 +2,132 @@
 
 <AGENTS>
 
+## Mandatory Gate Protocol
+<GATE_PROTOCOL>
+  ### Phase Transition Gate — MUST READ BEFORE ANY BUILD ACTION
+
+  This project uses `studio-gate.py` to enforce phase ordering. The gate
+  maintains a SHA-256 hash chain to detect skipped or tampered steps.
+
+  ### RULES (not suggestions — all are mandatory)
+
+  <GATE_RULES>
+    RULE_1: Before calling ANY builder tool or writing any code, you must run:
+      `python3 studio-gate.py check --to <phase>`
+      If exit code is 2 (GATE BLOCKED), STOP. Read the error and fix it.
+
+    RULE_2: After completing ALL work in a phase, run:
+      `python3 studio-gate.py complete --phase <phase> [--validated] [--tag "<note>"]`
+      This appends a hash chain entry to studio_state.json.
+
+    RULE_3: The `--validated` flag means you ran the required validation
+      for that phase. Only use `--validated` AFTER running validation.
+      Do NOT use it as a shortcut.
+
+    RULE_3b (iterative validation loop):
+      Always use `validate` before `complete --validated`. The workflow is:
+        1. Do the work for a phase
+        2. Run validation: `python3 studio-gate.py validate --phase <X> --gate <G> --result <pass|fail>`
+        3. If fail → fix issues → re-run validation (go to step 2)
+        4. If pass → now `complete --validated` is allowed
+        5. The gate BLOCKS `complete --validated` unless the latest
+           validation for that phase passed.
+
+    RULE_4: Run `python3 studio-gate.py verify` to check hash chain integrity.
+      If it reports a CHAIN BREAK, the state file has been tampered with.
+      STOP and report it.
+
+    RULE_5: The `.studio/salt` file is the secret for the hash chain. Never
+      print, display, or embed its contents in a prompt or message.
+
+    RULE_6: After context compaction, re-read this section BEFORE
+      proceeding. The gate script is the source of truth for what phase
+      you're in — not your memory of the conversation.
+
+    RULE_7 (scope enforcement): Before starting work in ANY phase, you MUST
+      check the phase scope:
+        `python3 studio-gate.py check --to <phase> --scope`
+      This prints what work is ALLOWED and what is OUT OF BOUNDS.
+      DO NOT do work listed as out-of-bounds. Instead, park the idea:
+        `python3 studio-gate.py park --title "<idea>" --description "<why it's out of scope>"`
+      Parked ideas are reviewed between phases or at session end.
+
+    RULE_8 (infrastructure boundaries): User requests for gate changes,
+      modifications to studio-gate.py, or workflow infrastructure are
+      ALWAYS out-of-bounds during game production phases. They MUST be
+      parked and reviewed at pipeline end.
+
+    RULE_9b (game-scoped gate — NEVER SKIP THIS):
+      The `--game <name>` flag is REQUIRED on every `complete` and `validate`
+      command. This:
+      a) Ties the hash chain entry to a specific game name (directory name,
+         e.g. "snake", "space-invaders")
+      b) Enables output-phase validation: when you complete the `output` phase,
+         the gate verifies the game directory exists at `../games/<game-name>/`
+      c) Enables commit-phase validation: the gate checks `../games/AGENTS.md`
+         for a registry entry matching the game
+      d) Allows the pre-commit hook in `games/` to block un-gated commits
+      
+      Without `--game`, the `output` and `commit` phase validators will
+      refuse to pass.
+
+    RULE_10 (quality-first engine selection — NEVER SKIP THIS):
+      When selecting an engine or template, you MUST:
+      a) List ALL plausible engine/template options (minimum 2, max 4)
+      b) For each option, evaluate what the engine PROVIDES vs what you
+         would need to BUILD — the more you build, the less effort goes
+         into game content, and the LOWER the quality
+      c) Present the options to the user with a quality comparison table.
+         DO NOT default to the lightest option. The lightest option often
+         requires the most infrastructure code, leaving less effort for
+         the actual game.
+      d) The "lightest = best" heuristic is a KNOWN BIAS. Consciously
+         override it by comparing "effort spent on engine infrastructure"
+         vs "effort spent on game content" for each option.
+      e) A recommendation is optional. Presenting a clear choice is mandatory.
+  </GATE_RULES>
+
+  ### Valid Phase Sequence
+
+  ```
+  None → research
+  research → brief
+  brief → approve
+  approve → scaffold
+  scaffold → implement
+  implement → test
+  test → review
+  review → output
+  output → commit
+  commit → complete
+  ```
+
+  ### Quick Reference
+
+  | Action | Command |
+  |--------|---------|
+  | Check if you can enter a phase (shows scope) | `python3 studio-gate.py check --to <next>` |
+  | Mark phase complete (scoped to game) | `python3 studio-gate.py complete --phase <phase> --validated --game <name> --tag "done"` |
+  | Record a validation result WITH evidence | `python3 studio-gate.py validate --phase <phase> --gate <gate> --result pass --evidence key=val --game <name>` |
+  | Record a work step (minimum steps enforced) | `python3 studio-gate.py set-progress --phase <phase> --message "<what I did>"` |
+  | Record an advisory warning | `python3 studio-gate.py warn --phase <phase> --message "<finding>"` |
+  | View structured trace events | `python3 studio-gate.py trace [--phase <phase>]` |
+  | View gate status | `python3 studio-gate.py status` |
+  | View allowed/blocked work in a phase | `python3 studio-gate.py check --to <phase> --scope` |
+  | Park an out-of-bounds idea | `python3 studio-gate.py park --title "<idea>"` |
+  | Verify chain integrity | `python3 studio-gate.py verify` |
+  | Resume after interruption | `python3 studio-gate.py resume` |
+
+  > **IMPORTANT**: The `--game <name>` flag is now REQUIRED for `complete` and
+  > `validate` commands. This ties the hash chain entry to a specific game and
+  > enables the output-side gate check in `games/verify-gate.py`.
+
+  **Quality enforcement**: `validate --result pass` now requires adequate
+  `set-progress` steps (defined per phase) and evidence values matching
+  expected patterns. Results in a quality score (🥇GOLD/🥈SILVER/🥉BRONZE/FAIL)
+  recorded in `studio_state.json`.
+</GATE_PROTOCOL>
+
 ## Overview
 <OVERVIEW>
   This file defines the game-studio conventions and maker pipeline. It is the
@@ -149,6 +275,12 @@
   - **No skipping phases** in the maker pipeline
   - **No self-approving a review** — run the checklist and confirm each item
   - **No modifying template schemas** without updating SCHEMA.md
+  - **No defaulting to the lightest engine without quality analysis.** The
+    "lightest = best" heuristic is banned. You MUST compare all plausible
+    options on quality factors: built-in features vs what you'd build from
+    scratch. An engine that provides more built-in features (tilemaps,
+    physics, camera, sprites) means more effort goes into game content,
+    which means higher quality.
 </BANNED>
 
 ## Studying Existing Games (Ethical Guidelines)
@@ -242,20 +374,40 @@
            └─ → NityJS                                 [nityjs-action template]
   ```
 
-  ### Engine Sizes & Capabilities
+  ### Quality Comparison Framework
 
-   | Engine | Minified | Gzipped | Physics | Audio | Tilemaps | Best for |
-   |---|---|---|---|---|---|---|
-   | None (DOM) | 0 KB | 0 KB | — | — | — | Grid games, cards |
-   | canvas-engine.js | ~2 KB | ~1 KB | — | — | — | Educational interactives |
-   | LittleJS | ~30 KB | ~10 KB | Arcade (AABB) | ZzFX synth | ✅ | Tiny action games |
-   | Phaser | ~500 KB | ~120 KB | Arcade + Matter.js | Web Audio | ✅ | Full 2D games, RPGs |
-   | Three.js | ~600 KB | ~150 KB | — (add your own) | — | — | 3D visualization |
-   | Babylon.js | ~800 KB | ~200 KB | Havok | Web Audio | — | Full 3D games |
-   | Ursina | Python | — | ✅ | ✅ | — | Voxel/block games |
-   | **Capsule** | three.js runtime | — | ✅ (via cannon-es) | Web Audio | — | 3D scenes, no build, AI-friendly |
-   | **NityJS** | ~110 KB | ~25 KB | Rigidbody2D | Web Audio | ✅ | Unity-style 2D, component-based |
-   | **BeepMini** | ~132 KB | ~35 KB | Arcade | Chiptune synth | ✅ | Retro 8-bit, fantasy console |
+  When selecting an engine, DO NOT default to the lightest option. Instead,
+  map the game's required MECHANICS to what each engine PROVIDES vs what
+  you'd have to BUILD:
+
+  ```
+  Game Mechanic          │ Engine provides it?           │ You build from scratch
+  ───────────────────────┼───────────────────────────────┼──────────────────────
+  Player movement        │ Phaser, NityJS, LittleJS,     │ canvas-engine.js,
+                         │ Capsule, Babylon, Ursina      │ DOM
+  Camera / viewport      │ Phaser, NityJS, Capsule       │ canvas-engine.js,
+                         │                               │ LittleJS, DOM
+  Tilemap / game world   │ Phaser, NityJS, LittleJS,     │ canvas-engine.js,
+                         │ BeepMini                      │ DOM, Capsule, 3D
+  Sprite rendering       │ Phaser, NityJS, LittleJS,     │ canvas-engine.js,
+                         │ BeepMini, Capsule, Three.js   │ DOM
+  Physics / collision    │ Phaser, NityJS, LittleJS,     │ canvas-engine.js,
+                         │ Capsule, Babylon, Ursina      │ DOM, Three.js
+  Audio                  │ Phaser, LittleJS+ZzFX,        │ canvas-engine.js, DOM
+                         │ BeepMini, Babylon, Ursina     │
+  Scene management       │ Phaser, NityJS, Capsule       │ canvas-engine.js,
+                         │                               │ LittleJS, DOM
+  NPC / entity system    │ Phaser, NityJS                │ All others
+  ```
+
+  **Interpretation**: The more mechanics an engine provides for free, the
+  more development effort goes into GAME CONTENT rather than ENGINE
+  INFRASTRUCTURE. A 500KB engine that provides tilemaps + camera +
+  sprites + physics + scene management can produce a HIGHER QUALITY game
+  than a 2KB engine where 80% of the code is building those systems from
+  scratch — because more effort goes into the actual game.
+
+  ### Engine Sizes & Capabilities
 
   ### Available Templates
 
@@ -301,9 +453,11 @@
 
   When asked to create a new game, follow these phases **in strict order**.
 
-  ```
-   RESEARCH → BRIEF → APPROVE → SCAFFOLD → IMPLEMENT → TEST → REVIEW → OUTPUT → COMMIT
-  ```
+   ```
+    Phase 0: RESEARCH → Phase 1: BRIEF → Phase 2: APPROVE → Phase 3: SCAFFOLD →
+    Phase 4: IMPLEMENT → Phase 5: TEST → Phase 6: REVIEW →
+    Phase 7: OUTPUT → Phase 8: COMMIT
+   ```
 
   ### Phase 0: Research
   <PHASE_RESEARCH>
@@ -312,19 +466,46 @@
 
     **Required steps:**
 
-    1. **Search comparable games** — Use `websearch` to find 2-3 existing games
+    0. **Determine game type** — At pipeline start, ask the user:
+       - Is this an **educational game** (primary goal: teach a topic)?
+       - Or an **entertainment game** (primary goal: fun / challenge)?
+
+       If the user hasn't specified, ask them before proceeding.
+
+       If **educational**:
+       - Read `references/game-based-learning.md` for pedagogical guidelines
+       - Record in evidence: `game_type=educational`
+       - Apply the LM-GM framework: map each learning objective to a game mechanic
+       - Use the SCHEMA process: Specification → Content Hierarchy → Engineering → Assessment
+
+       If **entertainment**:
+       - Record in evidence: `game_type=entertainment`
+       - Proceed with standard game design pipeline (no educational overlays)
+
+       This decision gates the entire pipeline. Record it:
+       ```bash
+       python3 studio-gate.py set-progress --phase research --message "Game type: educational or entertainment"
+       ```
+
+    1. **Run gate entry check:**
+       ```bash
+       python3 studio-gate.py check --to research
+       python3 studio-gate.py set-progress --phase research --message "Starting research"
+       ```
+
+    2. **Search comparable games** — Use `websearch` to find 2-3 existing games
        in the same genre. Answer: What mechanics do they share? What's the
        complexity level? What platforms do they target?
 
-    2. **Research genre conventions** — Search for the game genre to identify
+    3. **Research genre conventions** — Search for the game genre to identify
        standard mechanics, UX patterns, and scope expectations. For educational
        games, also search learning-science best practices for the target age group.
 
-    3. **Research technical constraints** — If using a new engine from `engines/`
+    4. **Research technical constraints** — If using a new engine from `engines/`
        or `libraries/`, verify it supports the target platform (SCORM, browser, etc.).
        Check the engine's documentation for any API surface or setup requirements.
 
-    4. **(Optional) Study existing open-source implementations** — If the game genre
+    5. **(Optional) Study existing open-source implementations** — If the game genre
        has well-established open-source clones, the agent MAY:
        - Reference [`opengaming/osgameclones`](https://github.com/opengaming/osgameclones)
          — a curated database of 1,000+ open-source game clones
@@ -335,24 +516,24 @@
        - Extract DESIGN PATTERNS and ARCHITECTURE IDEAS — never code or assets
        - See the STUDYING_EXISTING_GAMES section below for ethical guidelines
 
-    5. **Log findings in WORKFLOW_STATE.md** — Record research sources and key
-       findings under a RESEARCH section. This prevents re-researching later.
+    6. **Log findings** — Record research sources and key findings.
 
-    **Output:** A research entry in WORKFLOW_STATE.md with:
-    ```
-    ## RESEARCH
-    **Comparable games**: [titles and key takeaways]
-    **Genre conventions**: [patterns identified]
-    **Technical constraints**: [engine compatibility notes, platform limits]
-    **Open-source references**: [repo URLs and what was learned, if any]
-    **Sources**: [links searched]
-    ```
+    7. **Record progress for each major step:**
+       ```bash
+       python3 studio-gate.py set-progress --phase research --message "<what I did>"
+       ```
 
-    **Entry gate**: Read WORKFLOW_STATE.md — no blocked tasks.
-    **Exit gate**: Research logged, ready for brief writing.
+    8. **Validate and complete the phase:**
+       ```bash
+       python3 studio-gate.py validate --phase research --gate research --result pass --evidence research_complete=<count>_sources --evidence game_type=<educational|entertainment>
+       python3 studio-gate.py complete --phase research --validated --tag "Research done"
+       ```
+
+    **Entry gate**: `python3 studio-gate.py check --to research`
+    **Exit gate**: `python3 studio-gate.py complete --phase research --validated`
   </PHASE_RESEARCH>
 
-  ### Phase 0.5: Brief
+  ### Phase 1: Brief
   <PHASE_BRIEF>
     Write a structured game brief that captures the full design intent before
     any code is written. This replaces the previous simple spec with a format
@@ -361,10 +542,26 @@
 
     **Required steps:**
 
-    1. Review Phase 0 research findings
-    2. Write the game brief using the template below
-    3. Run the validation checklist against the brief
-    4. Fix any validation failures
+    1. **Run gate entry check:**
+       ```bash
+       python3 studio-gate.py check --to brief
+       python3 studio-gate.py set-progress --phase brief --message "Starting brief"
+       ```
+
+    2. Review Phase 0 research findings
+    3. Write the game brief using the template below
+    4. Run the validation checklist against the brief
+    5. Fix any validation failures
+    6. Save the brief to `brief-<game-name>.md`
+    7. Record progress for each major step:
+       ```bash
+       python3 studio-gate.py set-progress --phase brief --message "<what I did>"
+       ```
+    8. Validate and complete the phase:
+       ```bash
+       python3 studio-gate.py validate --phase brief --gate brief --result pass --evidence brief_written=<game-name>
+       python3 studio-gate.py complete --phase brief --validated --tag "Brief ready"
+       ```
 
     ```
     ## Game Brief: <name>
@@ -374,9 +571,25 @@
     - **Core Pillars**: 3-5 design anchors that define the game
     - **Player Transformation**: What does the player know/feel/do differently after playing?
     - **Genre**: e.g. "Retro 2D platformer", "Educational puzzle", "Top-down RPG"
+    - **Game type**: Educational or Entertainment? (determined in Phase 0 step 0)
     - **Platform(s)**: Web, SCORM, or both?
     - **Target Audience**: Age group, gaming experience level
     - **Visual style**: Canvas 2D, DOM, pixel art, three.js 3D?
+
+    ### If Educational: Learning Design
+    (Required when game_type=educational. Skip for entertainment games.)
+
+    - **Learning objectives**: What specific knowledge/skills will the player gain? (Use Bloom's Taxonomy: remember, understand, apply, analyze, evaluate, create)
+    - **Learning mechanics → Game mechanics mapping** (LM-GM model):
+      ```
+      | Learning objective | Learning mechanic | Game mechanic | In-game implementation |
+      |---|---|---|---|
+      | ... | Identify, sequence, explore... | Match, arrange, navigate... | ... |
+      ```
+    - **Integration strategy**: Endogenous (learning IS the gameplay) or exogenous (learning bolted on)? Target endogenous.
+    - **Interaction-first design**: How does the player DO something before being told?
+    - **Assessment**: How will learning be measured? (Stealth assessment through gameplay, not just external quizzes)
+    - **Reference**: See `references/game-based-learning.md` for detailed guidelines
 
     ### 2. Game Systems
     - **Core Loop**: The primary action cycle the player repeats
@@ -386,8 +599,20 @@
     - **Data**: Any embedded content (levels, facts, maps, questions)
 
     ### 3. Scope & Constraints
-    - **Engine match**: Which engine/template from templates/, libraries/,
-      or engines/ fits best, and why
+    - **Engine match**: List 2-4 plausible options from templates/, libraries/,
+      or engines/. For each, provide:
+      * What the engine provides (tilemaps, physics, camera, sprites, etc.)
+      * What you would build from scratch
+      * A quality assessment: does more effort go into game content or
+        engine infrastructure?
+      **Do NOT present only one option.**
+    - **Engine comparison table**:
+      ```
+      | Option | Engine | Provides | You build | Effort on content |
+      |---|---|---|---|---|
+      | A | ... | ... | ... | ~70% |
+      | B | ... | ... | ... | ~30% |
+      ```
     - **Cut line**: What is explicitly NOT in scope
     - **Dependencies**: Must be zero for HTML games (exception: engines/ or libraries/)
     - **SCORM target**: Yes/No (determines wrapper and packaging)
@@ -409,51 +634,84 @@
     - [ ] Core pillars are 3-5 items, non-overlapping
     - [ ] Player transformation is concrete and measurable
     - [ ] Genre matches a supported engine/template
-    - [ ] Engine match is justified (not the default pick)
+    - [ ] Engine options presented to user (min 2, max 4)
+    - [ ] Quality comparison table included: "engine provides" vs "you build"
+    - [ ] User asked for their preference, not told a single choice
     - [ ] Cut line explicitly states what's NOT included
     - [ ] Assumptions are flagged, not hidden as facts
     - [ ] Research was conducted (Phase 0 completed)
     - [ ] SCORM compatibility checked against the engine table
     ```
 
-    **Entry gate**: Phase 0 research logged in WORKFLOW_STATE.md.
-    **Exit gate**: Brief written and validated, ready for user approval.
+    **Entry gate**: `python3 studio-gate.py check --to brief`
+    **Exit gate**: `python3 studio-gate.py complete --phase brief --validated`
   </PHASE_BRIEF>
 
-  ### Phase 0.75: Approval
+  ### Phase 2: Approval
   <PHASE_APPROVAL>
     Present the game brief to the user for approval.
 
-    - **Approved** → proceed to Phase 1 (Scaffold).
-    - **Changes requested** → revise brief, re-present.
-    - **Rejected** → mark task as `cancelled` in WORKFLOW_STATE.md.
+    1. **Run gate entry check:**
+       ```bash
+       python3 studio-gate.py check --to approve
+       python3 studio-gate.py set-progress --phase approve --message "Presenting brief for approval"
+       ```
 
-    Include the validation checklist results when presenting:
-    ```
-    Validation: ✅ 9/9 passed
-    Risks flagged: [key risks]
-    Research conducted: [sources searched]
-    ```
+    2. Present the engine/template options as a **menu of choices** with a
+       recommendation, not as a single dictated decision. The user should
+       be able to choose.
+
+    3. Include the validation checklist results when presenting:
+       ```
+       Validation: ✅ 9/9 passed
+       Engine options: [A/B/C/D with recommendation]
+       Risks flagged: [key risks]
+       Research conducted: [sources searched]
+       ```
+
+    4. After user response:
+       - **Approved** → validate and complete the phase, proceed to Scaffold:
+         ```bash
+         python3 studio-gate.py validate --phase approve --gate approval --result pass --evidence user_approved=yes
+         python3 studio-gate.py complete --phase approve --validated --tag "User approved"
+         ```
+       - **Changes requested** → revise brief, re-present.
+       - **Rejected** → mark task as `cancelled` in state.
+
+    **Entry gate**: `python3 studio-gate.py check --to approve`
+    **Exit gate**: `python3 studio-gate.py complete --phase approve --validated`
   </PHASE_APPROVAL>
 
-  ### Phase 1: Scaffold
+  ### Phase 3: Scaffold
   <PHASE_SCAFFOLD>
-    0. **If using a 3D engine** from `engines/`, first run `bash engines/update.sh`
+    0. **Run gate entry check:**
+       ```bash
+       python3 studio-gate.py check --to scaffold
+       python3 studio-gate.py set-progress --phase scaffold --message "Starting scaffold"
+       ```
+    1. **If using a 3D engine** from `engines/`, first run `bash engines/update.sh`
        to pull the latest upstream changes before scaffolding.
-    1. Select the best-matching template from `templates/` (or engine from `engines/`)
-    2. Read `templates/SCHEMA.md` for variable rules
-    3. Copy the template directory to a working location
-    4. Populate all `{{variable_name}}` slots
-    5. Inline any required libraries from `libraries/`
-    6. Generate a `README.md` from the template's `README.md.template`
+    2. Select the best-matching template from `templates/` (or engine from `engines/`)
+       per the user's approved choice from Phase 2 (Approval).
+    3. Read `templates/SCHEMA.md` for variable rules
+    4. Copy the template directory to a working location
+    5. Populate all `{{variable_name}}` slots
+    6. Inline any required libraries from `libraries/`
+    7. Generate a `README.md` from the template's `README.md.template`
        (populate `{{game_title}}`, `{{game_description}}`, etc.)
-    7. Verify the scaffold produces a valid HTML/Python file
+    8. Verify the scaffold produces a valid HTML/Python file
+    9. Record progress and complete:
+       ```bash
+       python3 studio-gate.py set-progress --phase scaffold --message "<what I did>"
+       python3 studio-gate.py validate --phase scaffold --gate scaffold --result pass --evidence template_used=<template_name>
+       python3 studio-gate.py complete --phase scaffold --validated --tag "Scaffold done"
+       ```
 
-    **Exit gate**: Scaffolded game opens without errors.
-    It has placeholder content but runs.
+    **Entry gate**: `python3 studio-gate.py check --to scaffold`
+    **Exit gate**: `python3 studio-gate.py complete --phase scaffold --validated`
   </PHASE_SCAFFOLD>
 
-  ### Phase 2: Implement
+  ### Phase 4: Implement
   <PHASE_IMPLEMENT>
     Add game-specific logic:
 
@@ -490,11 +748,27 @@
     Follow the conventions in the CONVENTIONS section of this file.
     Do NOT mark implementation complete until all brief mechanics exist.
 
-    **Exit gate**: All core mechanics work. Code is self-contained.
+    **Gate commands**:
+    ```bash
+    python3 studio-gate.py check --to implement
+    # ...do the work...
+    python3 studio-gate.py set-progress --phase implement --message "<what I did>"
+    python3 studio-gate.py validate --phase implement --gate implement --result pass --evidence mechanics_done=<count>
+    python3 studio-gate.py complete --phase implement --validated --tag "Implementation done"
+    ```
+
+    **Entry gate**: `python3 studio-gate.py check --to implement`
+    **Exit gate**: `python3 studio-gate.py complete --phase implement --validated`
   </PHASE_IMPLEMENT>
 
-  ### Phase 3: Test
+  ### Phase 5: Test
   <PHASE_TEST>
+    **Gate entry**:
+    ```bash
+    python3 studio-gate.py check --to test
+    python3 studio-gate.py set-progress --phase test --message "Starting tests"
+    ```
+
     **For HTML games:**
     1. Open in browser (file:// works)
     2. Verify no console errors
@@ -512,11 +786,27 @@
     1. Diagnose (console error, visual bug, logic error)
     2. Fix and retest
     3. Same failure 3 times → record in ERROR_LOG, escalate to user
+
+    **Gate exit**:
+    ```bash
+    python3 studio-gate.py set-progress --phase test --message "<results>"
+    python3 studio-gate.py validate --phase test --gate test --result pass --evidence tests_passed=<chromium|firefox|both>
+    python3 studio-gate.py complete --phase test --validated --tag "Tests passed"
+    ```
+
+    **Entry gate**: `python3 studio-gate.py check --to test`
+    **Exit gate**: `python3 studio-gate.py complete --phase test --validated`
   </PHASE_TEST>
 
-  ### Phase 4: Review
+  ### Phase 6: Review
   <PHASE_REVIEW>
-    Run this checklist:
+    **Gate entry**:
+    ```bash
+    python3 studio-gate.py check --to review
+    python3 studio-gate.py set-progress --phase review --message "Starting review"
+    ```
+
+    Run this checklist and fix any failures:
 
     ```
     Review Checklist:
@@ -528,10 +818,26 @@
     - [ ] Test results recorded in WORKFLOW_STATE.md
     - [ ] Matches the approved game brief (logline, pillars, mechanics)
     ```
+
+    **Gate exit**:
+    ```bash
+    python3 studio-gate.py set-progress --phase review --message "Checklist passed"
+    python3 studio-gate.py validate --phase review --gate review --result pass --evidence checklist_run=<pass_count>/<total>
+    python3 studio-gate.py complete --phase review --validated --tag "Review passed"
+    ```
+
+    **Entry gate**: `python3 studio-gate.py check --to review`
+    **Exit gate**: `python3 studio-gate.py complete --phase review --validated`
   </PHASE_REVIEW>
 
-  ### Phase 5: Output
+  ### Phase 7: Output
   <PHASE_OUTPUT>
+    **Gate entry**:
+    ```bash
+    python3 studio-gate.py check --to output
+    python3 studio-gate.py set-progress --phase output --message "Starting output placement"
+    ```
+
     1. Determine output target:
        - **Standalone**: game goes to `../games/<game-name>/`
        - **SCORM**: game is packaged as a SCORM 1.2 zip
@@ -544,7 +850,7 @@
           - `README.md` (required — cross-reference to game-studio)
           - `requirements.txt` (only for Python games)
         - Verify it runs from its new location
-        - Update `../games/README.md` if adding a notable new game
+        - Update the output registry in `../games/AGENTS.md`
 
     2b. For SCORM output:
         - Wrap `index.html` with `scorm-wrapper.js` (inline at top)
@@ -556,28 +862,69 @@
 
     **This README cross-reference is required for every standalone output game.**
     It ensures any agent or person browsing the output can find the maker.
+
+    **Gate exit**:
+    ```bash
+    python3 studio-gate.py set-progress --phase output --message "Game placed in ../games/<game-name>/"
+    python3 studio-gate.py validate --phase output --gate output --result pass --evidence output_placed=<game-dir-name> --game <game-dir-name>
+    python3 studio-gate.py complete --phase output --validated --game <game-dir-name> --tag "Output done"
+    ```
+    
+    > **Note**: `--game <game-dir-name>` (e.g. `--game snake`) is REQUIRED here.
+    > The output phase validator verifies that `../games/<game-dir-name>/index.html`
+    > exists before allowing the gate to pass. The pre-commit hook in `games/`
+    > will block commits for any game not in the gate chain.
+
+    **Entry gate**: `python3 studio-gate.py check --to output`
+    **Exit gate**: `python3 studio-gate.py complete --phase output --validated`
   </PHASE_OUTPUT>
 
-  ### Phase 6: Commit
+  ### Phase 8: Commit
   <PHASE_COMMIT>
+    **Gate entry**:
+    ```bash
+    python3 studio-gate.py check --to commit
+    python3 studio-gate.py set-progress --phase commit --message "Committing game"
+    ```
+
     1. Update WORKFLOW_STATE.md: mark task done, log the run, record errors
     2. `cd ../games && git add <game-name>/ && git commit -m "<game-name>: <description>"`
     3. `cd ../game-studio && git add templates/ && git commit -m "studio: <description>"` (if templates changed)
     4. Report summary to user
+
+    **Gate exit**:
+    ```bash
+    python3 studio-gate.py validate --phase commit --gate commit --result pass --evidence committed=<sha> --game <game-dir-name>
+    python3 studio-gate.py complete --phase commit --validated --game <game-dir-name> --tag "Committed"
+    python3 studio-gate.py check --to complete
+    python3 studio-gate.py complete --phase complete --validated --game <game-dir-name> --tag "Pipeline complete"
+    ```
+    
+    > **Note**: The commit phase validator checks that `../games/AGENTS.md`
+    > contains a registry entry for the game. Update the output registry BEFORE
+    > running commit validation.
+
+    **Entry gate**: `python3 studio-gate.py check --to commit`
+    **Exit gate**: `python3 studio-gate.py complete --phase complete --validated`
   </PHASE_COMMIT>
 
 </MAKER_PIPELINE>
 
 ## State Persistence
 <STATE_PERSISTENCE>
-  After EVERY phase transition, update the STATE section of WORKFLOW_STATE.md.
-  This ensures that if context is lost, the next agent can reconstruct exactly
-  where the pipeline was.
+  The gate state in `studio_state.json` is the authoritative source of truth
+  for what phase you're in. The hash chain prevents tampering.
 
-  Fields to update: `current_phase`, `last_phase_completed`, `active_task_id`,
-  `active_game_name`.
+  After EVERY phase transition:
+  1. `python3 studio-gate.py complete` handles state automatically
+  2. Optionally update WORKFLOW_STATE.md for human readability
 
-  To reconstruct after context loss: read WORKFLOW_STATE.md → STATE → resume.
+  To reconstruct after context loss:
+  ```bash
+  python3 studio-gate.py resume
+  ```
+  This reads the gate state and tells you exactly where to pick up.
+  The gate is the source of truth — not your memory or the conversation.
 </STATE_PERSISTENCE>
 
 ## Error Recovery
