@@ -1,0 +1,20 @@
+{
+  "current_phase": null,
+  "last_phase_completed": null,
+  "phase_progress": "",
+  "validation_chain": [
+    {
+      "phase": "genesis",
+      "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "timestamp": "2026-07-21T04:41:37Z",
+      "validated": true,
+      "tag": "Gate initialized",
+      "hash": "2afaec377ae4ef48673849eb7900ecf25dd1bc10aeb8a0b4faac64131408d8b1"
+    }
+  ],
+  "validation_runs": [],
+  "trace_events": [],
+  "quality_levels": {},
+  "advisory_warnings": [],
+  "parking_lot": []
+}
