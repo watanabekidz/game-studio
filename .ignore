@@ -1,0 +1,36 @@
+# .ignore — Controls grep/glob search scope for AI agents
+# Files and directories listed here are excluded from agent searches.
+
+# Git
+.git/
+
+# Cloned engines (each has its own .git, not project code)
+engines/*/.git/
+engines/*/node_modules/
+engines/*/*.glb
+engines/*/*.png
+engines/*/docs/
+engines/*/demo/assets/
+
+# NPM artifacts (from Capsule mobile-export)
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# IDE
+.idea/
+.vscode/
+
+# Binary / large assets that add noise to code search
+libraries/phaser.min.js
+libraries/littlejs.release.js
+libraries/nity.min.js
+libraries/beepmini/b8.min.js
+libraries/beepmini/assets/*.png

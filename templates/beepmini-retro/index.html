@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{title}}</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #1a1a2e; }
+body { display: flex; justify-content: center; align-items: center; user-select: none; }
+#game-container { width: 512px; height: 384px; position: relative; }
+{{style_overrides}}
+</style>
+</head>
+<body>
+<div id="game-container"></div>
+<script>
+// ── Engine (inlined during scaffolding) ──
+{{library_beepmini}}
+
+// ── {{title}} — Game-Specific Logic ──
+// BeepMini is a retro fantasy console. Use its built-in API:
+//   b8.init(main, { NAME: "{{title}}", ... });
+//
+// Common pattern:
+//   async function main() {
+//     b8.color(10, 5);
+//     b8.cls();
+//     b8.locate(1, 1);
+//     b8.print("Hello world!");
+//   }
+//   window.addEventListener("load", () => {
+//     b8.init(main, {
+//       NAME: "{{title}}",
+//       FONT_DEFAULT: "./assets/font-default.png",
+//       FONT_TILES: "./assets/font-tiles.png",
+//       FONT_ACTORS: "./assets/font-actors.png",
+//       CANVAS_SETTINGS: { CONTAINER: "#game-container" }
+//     });
+//   });
+
+{{game_script}}
+
+// ── SCORM (optional, for LMS packaging) ──
+{{scorm_script}}
+</script>
+</body>
+</html>

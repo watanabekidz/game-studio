@@ -1,0 +1,14 @@
+{
+  "name": "beepmini-retro",
+  "description": "Retro 8-bit fantasy console game using BeepMini engine",
+  "tier": 2,
+  "type": "retro",
+  "engine": "beepmini",
+  "variables": ["title", "description", "style_overrides", "game_script"],
+  "readme_variables": ["game_title", "game_description", "run_instructions"],
+  "libraries": ["beepmini/b8.min.js"],
+  "extra_assets": ["beepmini/assets/"],
+  "scorm": true,
+  "scorm_extra_files": ["assets/"],
+  "target": "html"
+}

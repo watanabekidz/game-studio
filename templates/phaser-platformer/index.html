@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{title}}</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #0f172a; }
+body { display: flex; justify-content: center; align-items: center; user-select: none; }
+{{style_overrides}}
+</style>
+</head>
+<body>
+<script>
+// ── Engine (inlined during scaffolding) ──
+{{library_phaser}}
+
+// ── {{title}} — Game-Specific Logic ──
+// Define your game below using the Phaser API.
+// Reference: https://phaser.io/learning
+//
+// Common pattern:
+//   class MyScene extends Phaser.Scene {
+//     constructor() { super({ key: 'game' }); }
+//     create() { /* sprites, physics, input */ }
+//     update() { /* game loop */ }
+//   }
+//   new Phaser.Game({ type: Phaser.AUTO, scene: MyScene, ... });
+
+{{game_script}}
+
+// ── SCORM (optional, for LMS packaging) ──
+{{scorm_script}}
+</script>
+</body>
+</html>

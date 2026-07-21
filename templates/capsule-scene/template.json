@@ -1,0 +1,13 @@
+{
+  "name": "capsule-scene",
+  "description": "3D scene using Three.js (compatible with Capsule engine in engines/capsule/)",
+  "tier": 4,
+  "type": "3d-scene",
+  "engine": "three",
+  "variables": ["title", "description", "controls", "style_overrides", "game_script"],
+  "readme_variables": ["game_title", "game_description", "run_instructions"],
+  "libraries": [],
+  "scorm": false,
+  "scorm_note": "Use Capsule single-file HTML export for SCORM packaging",
+  "target": "html"
+}

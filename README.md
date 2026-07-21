@@ -20,7 +20,7 @@ A **game template + library system** for building browser-based HTML games and P
 To create a new game, an AI agent reads `AGENTS.md` and follows the maker pipeline:
 
 ```
-DESIGN → APPROVE → SCAFFOLD → IMPLEMENT → TEST → REVIEW → OUTPUT → COMMIT
+RESEARCH → BRIEF → APPROVE → SCAFFOLD → IMPLEMENT → TEST → REVIEW → OUTPUT → COMMIT
 ```
 
 The finished game lands in `../games/<game-name>/`.

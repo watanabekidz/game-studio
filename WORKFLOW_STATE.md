@@ -16,10 +16,10 @@
   | `active_game_name` | `—` |
   | `last_updated` | `2026-07-18` |
 
-  Valid phase values: `design | approve | scaffold | implement | test | review | output | commit | complete`
+  Valid phase values: `research | brief | approve | scaffold | implement | test | review | output | commit | complete`
   Valid transitions (no skipping):
   ```
-  design → approve → scaffold → implement → test → review → output → commit → complete
+  research → brief → approve → scaffold → implement → test → review → output → commit → complete
   ```
 </STATE>
 

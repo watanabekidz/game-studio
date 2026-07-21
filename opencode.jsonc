@@ -1,0 +1,8 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "name": "game-studio",
+  "description": "Game template + library system for building HTML5 and Python games. Maker pipeline with 9 phases: RESEARCH → BRIEF → APPROVE → SCAFFOLD → IMPLEMENT → TEST → REVIEW → OUTPUT → COMMIT.",
+  "instructions": [
+    "AGENTS.md"
+  ]
+}

@@ -1,0 +1,14 @@
+# {{game_title}}
+
+{{game_description}}
+
+**Built by the game-studio template system.** To create games like this, see
+[`../game-studio/`](https://github.com/watanabekidz/game-studio).
+
+---
+
+{{run_instructions}}
+
+### Tech
+
+- Engine: NityJS (Unity-style GameObjects, physics, tilemaps)

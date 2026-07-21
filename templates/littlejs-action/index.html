@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{title}}</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #0f172a; }
+body { display: flex; justify-content: center; align-items: center; user-select: none; }
+canvas { display: block; }
+#ui-overlay {
+  position: absolute; top: 0; left: 0; right: 0; pointer-events: none;
+  font-family: 'Segoe UI', system-ui, sans-serif; color: #fff; padding: 16px 24px;
+}
+#controls-hint {
+  position: absolute; bottom: 12px; left: 0; right: 0; text-align: center;
+  font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13px;
+  color: rgba(255,255,255,0.35); pointer-events: none;
+}
+{{style_overrides}}
+</style>
+</head>
+<body>
+<canvas id="game"></canvas>
+<div id="ui-overlay"><div id="hud">0</div></div>
+<div id="controls-hint">{{controls}}</div>
+<script>
+// ── Engine (inlined during scaffolding) ──
+{{library_littlejs}}
+{{library_zzfx}}
+
+// ── {{title}} — Game-Specific Logic ──
+// Define your game below using the LittleJS API.
+// Reference: https://killedbyapixel.github.io/LittleJS/docs/
+//
+// Common pattern:
+//   class MyGame extends EngineObject {
+//     constructor() { super(...); }
+//     update() { /* movement, physics, input */ }
+//   }
+//   engineInit(() => { /* scene setup */ });
+
+{{game_script}}
+
+// ── SCORM (optional, for LMS packaging) ──
+{{scorm_script}}
+</script>
+</body>
+</html>

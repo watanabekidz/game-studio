@@ -1,0 +1,12 @@
+{
+  "name": "nityjs-action",
+  "description": "Unity-style 2D game using NityJS GameObject-Component engine",
+  "tier": 3,
+  "type": "action",
+  "engine": "nityjs",
+  "variables": ["title", "description", "controls", "style_overrides", "game_script"],
+  "readme_variables": ["game_title", "game_description", "run_instructions"],
+  "libraries": ["nity.min.js"],
+  "scorm": true,
+  "target": "html"
+}

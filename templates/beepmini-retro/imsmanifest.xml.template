@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="{{scorm_interaction_code}}" version="1.2"
+          xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+          xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2">
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+  </metadata>
+  <organizations default="default">
+    <organization identifier="default">
+      <title>{{scorm_lesson_title}}</title>
+      <item identifier="item_1" identifierref="resource_1">
+        <title>{{scorm_lesson_title}}</title>
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="resource_1" type="webcontent" adlcp:scormtype="sco" href="index.html">
+      <file href="index.html"/>
+      <file href="assets/font-default.png"/>
+      <file href="assets/font-tiles.png"/>
+      <file href="assets/font-actors.png"/>
+    </resource>
+  </resources>
+</manifest>

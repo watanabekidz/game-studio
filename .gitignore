@@ -26,3 +26,6 @@ Thumbs.db
 
 # Editor artifacts
 *~
+
+# External engine repos (cloned, not submodules — each has its own .git)
+engines/

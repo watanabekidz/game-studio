@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{title}}</title>
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+body { user-select: none; }
+canvas { display: block; }
+#info {
+  position: absolute; bottom: 12px; left: 0; right: 0; text-align: center;
+  font-family: 'Segoe UI', system-ui, sans-serif; font-size: 13px;
+  color: rgba(255,255,255,0.35); pointer-events: none;
+}
+{{style_overrides}}
+</style>
+</head>
+<body>
+<div id="info">{{controls}}</div>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+// ── {{title}} — 3D Scene Logic ──
+// This template uses Three.js (loaded via import map, no build step).
+// For the full Capsule editor experience, use engines/capsule/ directly.
+//
+// Common pattern:
+//   import * as THREE from 'three';
+//   const scene = new THREE.Scene();
+//   const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+//   const renderer = new THREE.WebGLRenderer({ antialias: true });
+//   renderer.setSize(window.innerWidth, window.innerHeight);
+//   document.body.appendChild(renderer.domElement);
+
+{{game_script}}
+</script>
+</body>
+</html>
