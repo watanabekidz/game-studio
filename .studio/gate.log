@@ -42,3 +42,8 @@
 [2026-07-23T07:17:30] Validation: output/output ✓ PASS
 [2026-07-23T07:17:34] Phase completed: output game=the-travellers-tale validated=True hash=c42adad01965 tag=Output done
 [2026-07-23T07:18:10] Progress: commit — Starting commit phase: game in games/ repo, scaffold in game-studio/
+[2026-07-23T07:19:12] Validation: commit/commit ✓ PASS
+[2026-07-23T07:19:16] Progress: commit — Games + game-studio repos committed; output registry updated
+[2026-07-23T07:19:24] Validation: commit/commit ✓ PASS
+[2026-07-23T07:19:28] Phase completed: commit game=the-travellers-tale validated=True hash=6a8bc9c965e5 tag=Committed
+[2026-07-23T07:19:43] Phase completed: complete game=the-travellers-tale validated=False hash=ec4a6fd9113f tag=Pipeline complete

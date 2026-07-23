@@ -1,7 +1,7 @@
 {
-  "current_phase": "commit",
-  "last_phase_completed": "output",
-  "phase_progress": "Starting commit phase: game in games/ repo, scaffold in game-studio/",
+  "current_phase": "complete",
+  "last_phase_completed": "complete",
+  "phase_progress": "",
   "validation_chain": [
     {
       "phase": "genesis",
@@ -82,6 +82,24 @@
       "validated": true,
       "tag": "Output done",
       "hash": "c42adad019653715c895ccda4303cebf02fdd44016fc8051ac81b01c6c2ec5eb"
+    },
+    {
+      "phase": "commit",
+      "game": "the-travellers-tale",
+      "prev_hash": "c42adad019653715c895ccda4303cebf02fdd44016fc8051ac81b01c6c2ec5eb",
+      "timestamp": "2026-07-23T07:19:28Z",
+      "validated": true,
+      "tag": "Committed",
+      "hash": "6a8bc9c965e5879ac4510a2462f18c50d50ce3463c2a2e8d676a77b01186995f"
+    },
+    {
+      "phase": "complete",
+      "game": "the-travellers-tale",
+      "prev_hash": "6a8bc9c965e5879ac4510a2462f18c50d50ce3463c2a2e8d676a77b01186995f",
+      "timestamp": "2026-07-23T07:19:43Z",
+      "validated": false,
+      "tag": "Pipeline complete",
+      "hash": "ec4a6fd9113fcb90274aedee678b0b831a44c68d9d4e8329f34d94ec45116091"
     }
   ],
   "validation_runs": [
@@ -185,6 +203,30 @@
         "_step_count": "3"
       },
       "timestamp": "2026-07-23T07:17:30Z"
+    },
+    {
+      "phase": "commit",
+      "gate": "commit",
+      "result": "pass",
+      "summary": "",
+      "evidence": {
+        "committed": "b499cf6",
+        "game_name": "the-travellers-tale",
+        "_step_count": "1"
+      },
+      "timestamp": "2026-07-23T07:19:12Z"
+    },
+    {
+      "phase": "commit",
+      "gate": "commit",
+      "result": "pass",
+      "summary": "",
+      "evidence": {
+        "committed": "2cfb035",
+        "game_name": "the-travellers-tale",
+        "_step_count": "2"
+      },
+      "timestamp": "2026-07-23T07:19:24Z"
     }
   ],
   "trace_events": [
@@ -349,6 +391,12 @@
       "step": "Starting commit phase: game in games/ repo, scaffold in game-studio/",
       "message": "Starting commit phase: game in games/ repo, scaffold in game-studio/",
       "timestamp": "2026-07-23T07:18:10Z"
+    },
+    {
+      "phase": "commit",
+      "step": "Games + game-studio repos committed; output registry updated",
+      "message": "Games + game-studio repos committed; output registry updated",
+      "timestamp": "2026-07-23T07:19:16Z"
     }
   ],
   "quality_levels": {
@@ -359,7 +407,8 @@
     "implement": "gold",
     "test": "gold",
     "review": "gold",
-    "output": "gold"
+    "output": "gold",
+    "commit": "gold"
   },
   "advisory_warnings": [],
   "parking_lot": [],
