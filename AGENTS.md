@@ -228,6 +228,7 @@
   | Engine | Location | Run command | Format |
   |---|---|---|---|
   | **Capsule** | `engines/capsule/` | `python3 -m http.server 8000` (in engine dir) | HTML/JS (three.js) — no build step |
+  | **RPG-JS** | `engines/rpgjs/` | `npm run dev` (Vite, port 5173) | TypeScript (CanvasEngine) — Vite build step required |
 
   ### Capsule
   <ENGINE_CAPSULE>
@@ -247,6 +248,49 @@
 
 
 
+  ### RPG-JS
+  <ENGINE_RPGJS>
+    A TypeScript framework for building 2D browser RPGs and MMORPGs. Write gameplay
+    once, run as a standalone RPG or a networked MMORPG. Provides maps, players,
+    events, NPCs, dialog, inventory, skills, save/load, GUI, i18n, and multiplayer
+    room synchronization out of the box.
+
+    **License**: MIT — free for commercial use.
+    **Upstream**: https://github.com/RSamaium/RPG-JS (branch `v5`)
+
+    **Pipeline integration:**
+    1. Agent scaffolds a new RPG project from the starter (`npx degit rpgjs/starter#v5`)
+       or uses the sample projects in `engines/rpgjs/samples/` as reference
+    2. Agent writes game logic in TypeScript (player, events, maps)
+    3. Developer runs `npm run dev` to test in browser
+    4. For SCORM output, build with `npm run build` (produces static HTML/JS),
+       then wrap with `scorm-wrapper.js`
+
+    **Key directories:**
+    - `packages/` — engine packages (server, client, core, GUI, etc.)
+    - `samples/sample-dev/` — reference implementation
+    - `samples/cloudflare-mmorpg/` — MMORPG on Cloudflare Workers
+    - `playground/games/` — independent demo games
+
+    **Run commands:**
+    ```bash
+    # Dev server (RPG mode)
+    cd engines/rpgjs && npm run dev
+
+    # Dev server (MMORPG mode)
+    cd engines/rpgjs && RPG_TYPE=mmorpg npm run dev
+
+    # Sample project dev
+    cd engines/rpgjs/samples/sample-dev && npm run dev
+    ```
+
+    **SCORM note:** RPG-JS has a server/client architecture. In standalone RPG mode,
+    `provideRpg()` runs server logic client-side, so the Vite build produces a
+    self-contained bundle that can be wrapped with `scorm-again`.
+    See the SCORM Output section for the standard wrapping pipeline.
+  </ENGINE_RPGJS>
+
+
   ### Updating Engines On Demand
   <ENGINE_UPDATE_ON_DEMAND>
     Before using any engine for game creation, **always pull the latest version**
@@ -258,6 +302,7 @@
 
     # Or update individually
     cd engines/capsule && git pull origin main
+    cd engines/rpgjs && git pull origin v5
     ```
 
     This is automated in `engines/update.sh` and is also a required step in the

@@ -1,0 +1,35 @@
+{
+    "name": "Innkeeper",
+    "greeting": "Welcome to the Wayfarer's Rest! What brings you to our corner of the world, traveller?",
+    "pokes": [
+        "Need another drink? Or perhaps you've heard something new?",
+        "The fire's warm and the mead's cold. Take your time.",
+        "Quiet tonight. Just the way I like it."
+    ],
+    "topics": [
+        {
+            "id": "rumors",
+            "ask": "Heard any rumors lately?",
+            "response": "Strange things on the old road, they say. Caravans going missing between here and the capital. Folk whisper about shadows moving in the daylight — figures wrapped in grey cloaks who ask too many questions about the old ruins.",
+            "followUp": "I'd be careful on the north road if I were you. The watch hasn't been sending patrols that way."
+        },
+        {
+            "id": "work",
+            "ask": "I'm looking for work.",
+            "response": "A strapping sort like you? Old Marta up on Fox Hill was looking for someone to clear out her cellar. Said something's been scratching at the floorboards. She pays in silver and hot pies.",
+            "followUp": "And if that don't interest you, the merchant guild's been hiring escorts for the southern route. Pays well, but the road's rough this time of year."
+        },
+        {
+            "id": "ruins",
+            "ask": "Tell me about the old ruins.",
+            "response": "Ah, the Sunken Temple. Just east of here, half a day's walk. Been there since before the kingdom was a kingdom. Locals say it was built by folk who worshipped stars — not the ones in the sky, mind you. Deep stars. Below-stars.",
+            "followUp": "I wouldn't go poking around there after dark. But then again, I'm just a innkeeper."
+        },
+        {
+            "id": "story",
+            "ask": "Tell me a story.",
+            "response": "Let's see... there's the tale of the Wandering Bard, the one who played a song so true that the mountains wept and the rivers changed course. They say he's still out there, walking the roads, looking for an ending to his final verse.",
+            "followUp": "Or so the minstrels sing. Between you and me, I think they just like the sound of their own voices."
+        }
+    ]
+}

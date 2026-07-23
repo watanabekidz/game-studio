@@ -1,7 +1,7 @@
 {
-  "current_phase": null,
-  "last_phase_completed": null,
-  "phase_progress": "",
+  "current_phase": "commit",
+  "last_phase_completed": "output",
+  "phase_progress": "Starting commit phase: game in games/ repo, scaffold in game-studio/",
   "validation_chain": [
     {
       "phase": "genesis",
@@ -10,11 +10,358 @@
       "validated": true,
       "tag": "Gate initialized",
       "hash": "2afaec377ae4ef48673849eb7900ecf25dd1bc10aeb8a0b4faac64131408d8b1"
+    },
+    {
+      "phase": "research",
+      "game": "medieva-edu-rpg",
+      "prev_hash": "2afaec377ae4ef48673849eb7900ecf25dd1bc10aeb8a0b4faac64131408d8b1",
+      "timestamp": "2026-07-23T05:19:25Z",
+      "validated": true,
+      "tag": "Research done: RPG-JS docs, comparable games, educational framework",
+      "hash": "20d3ad33e6b038f16ac03fae822258b39784e5deb446de344ec311041cb1e1b7"
+    },
+    {
+      "phase": "brief",
+      "game": "medieva-edu-rpg",
+      "prev_hash": "20d3ad33e6b038f16ac03fae822258b39784e5deb446de344ec311041cb1e1b7",
+      "timestamp": "2026-07-23T05:20:13Z",
+      "validated": true,
+      "tag": "Brief ready: medieval educational RPG (The Traveller's Tale)",
+      "hash": "6a3ea6b1a3a17045e9f9377cd4321850927ac0eef89d368cd5c7f83ee4ea2019"
+    },
+    {
+      "phase": "approve",
+      "game": "medieva-edu-rpg",
+      "prev_hash": "6a3ea6b1a3a17045e9f9377cd4321850927ac0eef89d368cd5c7f83ee4ea2019",
+      "timestamp": "2026-07-23T05:20:43Z",
+      "validated": true,
+      "tag": "User approved RPG-JS v5 for The Traveller's Tale",
+      "hash": "9e06f0f35947ef402cd6a5adcbc62920053487708edac42efa27bd3f92ab39a4"
+    },
+    {
+      "phase": "scaffold",
+      "game": "medieva-edu-rpg",
+      "prev_hash": "9e06f0f35947ef402cd6a5adcbc62920053487708edac42efa27bd3f92ab39a4",
+      "timestamp": "2026-07-23T05:22:45Z",
+      "validated": true,
+      "tag": "Scaffold done: RPG-JS v5 project at scaffolds/the-travellers-tale/",
+      "hash": "94af14b51e44c6f21cf0fdbc2460823b9fa2d5b2b5400e962dfa16393b779c3a"
+    },
+    {
+      "phase": "implement",
+      "game": "the-travellers-tale",
+      "prev_hash": "94af14b51e44c6f21cf0fdbc2460823b9fa2d5b2b5400e962dfa16393b779c3a",
+      "timestamp": "2026-07-23T05:38:20Z",
+      "validated": true,
+      "tag": "Tavern map + NPC dialog + events wired; Vite build passes",
+      "hash": "3032cb785ac8b432169864836ca5e7c703acea49c27db99b146d1c011257864c"
+    },
+    {
+      "phase": "test",
+      "game": "the-travellers-tale",
+      "prev_hash": "3032cb785ac8b432169864836ca5e7c703acea49c27db99b146d1c011257864c",
+      "timestamp": "2026-07-23T05:45:00Z",
+      "validated": true,
+      "tag": "Runtime error fixed, game renders, all assets 200",
+      "hash": "f603318576bb432f30c2648d84f0b5a04076ed99e25515285d0d56af342d9040"
+    },
+    {
+      "phase": "review",
+      "game": "the-travellers-tale",
+      "prev_hash": "f603318576bb432f30c2648d84f0b5a04076ed99e25515285d0d56af342d9040",
+      "timestamp": "2026-07-23T07:13:02Z",
+      "validated": true,
+      "tag": "Review passed: self-contained, clean build, Chromium-verified",
+      "hash": "89b7dacfc1e6cec9623411d031fbbf2d57f633a9ca7e5a97a89e5d45e2d75af2"
+    },
+    {
+      "phase": "output",
+      "game": "the-travellers-tale",
+      "prev_hash": "89b7dacfc1e6cec9623411d031fbbf2d57f633a9ca7e5a97a89e5d45e2d75af2",
+      "timestamp": "2026-07-23T07:17:34Z",
+      "validated": true,
+      "tag": "Output done",
+      "hash": "c42adad019653715c895ccda4303cebf02fdd44016fc8051ac81b01c6c2ec5eb"
     }
   ],
-  "validation_runs": [],
-  "trace_events": [],
-  "quality_levels": {},
+  "validation_runs": [
+    {
+      "phase": "research",
+      "gate": "research",
+      "result": "pass",
+      "summary": "",
+      "evidence": {
+        "research_complete": "3_sources",
+        "game_type": "educational",
+        "game_name": "medieva-edu-rpg",
+        "_step_count": "3"
+      },
+      "timestamp": "2026-07-23T05:19:22Z"
+    },
+    {
+      "phase": "brief",
+      "gate": "brief",
+      "result": "pass",
+      "summary": "",
+      "evidence": {
+        "brief_written": "medieval-edu-rpg",
+        "options_presented": "3",
+        "game_name": "medieva-edu-rpg",
+        "_step_count": "3"
+      },
+      "timestamp": "2026-07-23T05:20:10Z"
+    },
+    {
+      "phase": "approve",
+      "gate": "approval",
+      "result": "pass",
+      "summary": "",
+      "evidence": {
+        "user_approved": "yes",
+        "engine_choice": "rpgjs-v5",
+        "game_name": "medieva-edu-rpg",
+        "_step_count": "1"
+      },
+      "timestamp": "2026-07-23T05:20:40Z"
+    },
+    {
+      "phase": "scaffold",
+      "gate": "scaffold",
+      "result": "pass",
+      "summary": "",
+      "evidence": {
+        "template_used": "rpgjs-starter",
+        "scaffold_dir": "scaffolds",
+        "build_verified": "yes",
+        "game_name": "medieva-edu-rpg",
+        "_step_count": "4"
+      },
+      "timestamp": "2026-07-23T05:22:39Z"
+    },
+    {
+      "phase": "implement",
+      "gate": "implement",
+      "result": "pass",
+      "summary": "",
+      "evidence": {
+        "game_name": "the-travellers-tale",
+        "mechanics_done": "6",
+        "_step_count": "6"
+      },
+      "timestamp": "2026-07-23T05:38:16Z"
+    },
+    {
+      "phase": "test",
+      "gate": "test",
+      "result": "pass",
+      "summary": "",
+      "evidence": {
+        "tests_passed": "chromium",
+        "game_name": "the-travellers-tale",
+        "_step_count": "3"
+      },
+      "timestamp": "2026-07-23T05:44:56Z"
+    },
+    {
+      "phase": "review",
+      "gate": "review",
+      "result": "pass",
+      "summary": "",
+      "evidence": {
+        "checklist_run": "6/6",
+        "game_name": "the-travellers-tale",
+        "_step_count": "3"
+      },
+      "timestamp": "2026-07-23T07:12:58Z"
+    },
+    {
+      "phase": "output",
+      "gate": "output",
+      "result": "pass",
+      "summary": "",
+      "evidence": {
+        "output_placed": "the-travellers-tale",
+        "game_name": "the-travellers-tale",
+        "_step_count": "3"
+      },
+      "timestamp": "2026-07-23T07:17:30Z"
+    }
+  ],
+  "trace_events": [
+    {
+      "phase": "research",
+      "step": "Game type: educational. Starting research.",
+      "message": "Game type: educational. Starting research.",
+      "timestamp": "2026-07-23T05:18:32Z"
+    },
+    {
+      "phase": "research",
+      "step": "Research complete: studied RPG-JS docs (maps, events, dialog, world transitions), comparable educational games (Wanderfolk, ActiveHistory, Wolsey Academy), game-based-learning.md framework (LM-GM, endogenous integration, historical RPG patterns). Game type: educational.",
+      "message": "Research complete: studied RPG-JS docs (maps, events, dialog, world transitions), comparable educational games (Wanderfolk, ActiveHistory, Wolsey Academy), game-based-learning.md framework (LM-GM, endogenous integration, historical RPG patterns). Game type: educational.",
+      "timestamp": "2026-07-23T05:18:58Z"
+    },
+    {
+      "phase": "research",
+      "step": "Searched comparable games: The Lord's Ledger (medieval economic sim, React+Vite, MIT), Cipherfell (medieval mystery RPG for cybersecurity), Universal History Simulator (procedural history, TS). Genre conventions: tilemap-based exploration, NPC dialogs with choice trees, historical notes embedded in gameplay. RPG-JS docs fully studied: maps, events, dialog, world transitions, spritesheets. Technical constraints confirmed: standalone mode works via provideRpg(), no server needed.",
+      "message": "Searched comparable games: The Lord's Ledger (medieval economic sim, React+Vite, MIT), Cipherfell (medieval mystery RPG for cybersecurity), Universal History Simulator (procedural history, TS). Genre conventions: tilemap-based exploration, NPC dialogs with choice trees, historical notes embedded in gameplay. RPG-JS docs fully studied: maps, events, dialog, world transitions, spritesheets. Technical constraints confirmed: standalone mode works via provideRpg(), no server needed.",
+      "timestamp": "2026-07-23T05:19:19Z"
+    },
+    {
+      "phase": "brief",
+      "step": "Starting game brief for medieval educational RPG",
+      "message": "Starting game brief for medieval educational RPG",
+      "timestamp": "2026-07-23T05:19:34Z"
+    },
+    {
+      "phase": "brief",
+      "step": "Game brief written: brief-medieval-edu-rpg.md with 11/11 checklist items passed",
+      "message": "Game brief written: brief-medieval-edu-rpg.md with 11/11 checklist items passed",
+      "timestamp": "2026-07-23T05:19:59Z"
+    },
+    {
+      "phase": "brief",
+      "step": "Brief validation checklist: \u2705 Logline under 280 chars, \u2705 4 core pillars, \u2705 concrete player transformation, \u2705 RPG-JS engine match, \u2705 3 engine options presented, \u2705 quality comparison table included, \u2705 cut line explicit, \u2705 assumptions flagged, \u2705 research conducted, \u2705 SCORM checked (no)",
+      "message": "Brief validation checklist: \u2705 Logline under 280 chars, \u2705 4 core pillars, \u2705 concrete player transformation, \u2705 RPG-JS engine match, \u2705 3 engine options presented, \u2705 quality comparison table included, \u2705 cut line explicit, \u2705 assumptions flagged, \u2705 research conducted, \u2705 SCORM checked (no)",
+      "timestamp": "2026-07-23T05:20:04Z"
+    },
+    {
+      "phase": "approve",
+      "step": "User approved RPG-JS v5 for The Traveller's Tale. Engine options presented (3), user chose RPG-JS (Recommended).",
+      "message": "User approved RPG-JS v5 for The Traveller's Tale. Engine options presented (3), user chose RPG-JS (Recommended).",
+      "timestamp": "2026-07-23T05:20:36Z"
+    },
+    {
+      "phase": "scaffold",
+      "step": "Starting scaffold for RPG-JS project",
+      "message": "Starting scaffold for RPG-JS project",
+      "timestamp": "2026-07-23T05:20:53Z"
+    },
+    {
+      "phase": "scaffold",
+      "step": "Scaffolded RPG-JS v5 project from starter template. Dependencies installed, build verified. Updated package.json, readme.md, project structure confirmed (standalone.ts, modules/, config/, tiled/ maps).",
+      "message": "Scaffolded RPG-JS v5 project from starter template. Dependencies installed, build verified. Updated package.json, readme.md, project structure confirmed (standalone.ts, modules/, config/, tiled/ maps).",
+      "timestamp": "2026-07-23T05:22:25Z"
+    },
+    {
+      "phase": "scaffold",
+      "step": "Scaffold location: scaffolds/the-travellers-tale/. Engine: RPG-JS v5 (starter template via degit). No template variables needed (RPG-JS uses its own scaffold system, not game-studio templates). Sources: config.client.ts (spritesheets: hero, female), server.ts (LocalStorageSaveStorageStrategy, tiledmap), standalone.ts (provideRpg for single-player).",
+      "message": "Scaffold location: scaffolds/the-travellers-tale/. Engine: RPG-JS v5 (starter template via degit). No template variables needed (RPG-JS uses its own scaffold system, not game-studio templates). Sources: config.client.ts (spritesheets: hero, female), server.ts (LocalStorageSaveStorageStrategy, tiledmap), standalone.ts (provideRpg for single-player).",
+      "timestamp": "2026-07-23T05:22:29Z"
+    },
+    {
+      "phase": "scaffold",
+      "step": "Build verified: npx vite build completed without errors. Tiled map data copied to assets/data. Project runs via npm run dev (standalone mode).",
+      "message": "Build verified: npx vite build completed without errors. Tiled map data copied to assets/data. Project runs via npm run dev (standalone mode).",
+      "timestamp": "2026-07-23T05:22:33Z"
+    },
+    {
+      "phase": "implement",
+      "step": "Starting Phase 4: Implement \u2014 sourcing indoor/tavern tileset for tavern map",
+      "message": "Starting Phase 4: Implement \u2014 sourcing indoor/tavern tileset for tavern map",
+      "timestamp": "2026-07-23T05:27:57Z"
+    },
+    {
+      "phase": "implement",
+      "step": "Created tavern.tmx with all tilesets, NPC dialog JSON files (innkeeper, patron, wanderer), TavernNpc event factory with showText/showChoices branching dialog, wired into server.ts, player spawns in tavern",
+      "message": "Created tavern.tmx with all tilesets, NPC dialog JSON files (innkeeper, patron, wanderer), TavernNpc event factory with showText/showChoices branching dialog, wired into server.ts, player spawns in tavern",
+      "timestamp": "2026-07-23T05:38:02Z"
+    },
+    {
+      "phase": "implement",
+      "step": "Created 3 NPC dialog JSON files (innkeeper with 4 topics, patron with 3 topics, wanderer with 3 topics) with lore, quest hooks, and worldbuilding",
+      "message": "Created 3 NPC dialog JSON files (innkeeper with 4 topics, patron with 3 topics, wanderer with 3 topics) with lore, quest hooks, and worldbuilding",
+      "timestamp": "2026-07-23T05:38:07Z"
+    },
+    {
+      "phase": "implement",
+      "step": "Built TavernNpc event factory with showText/showChoices branching dialog loop, asynchronous onAction handler with topic navigation and goodbye flow",
+      "message": "Built TavernNpc event factory with showText/showChoices branching dialog loop, asynchronous onAction handler with topic navigation and goodbye flow",
+      "timestamp": "2026-07-23T05:38:07Z"
+    },
+    {
+      "phase": "implement",
+      "step": "Updated server.ts with tavern map registration and 3 NPC events (innkeeper at bar, patron at table, wanderer near fireplace) at coordinates matching tavern.tmx event layer",
+      "message": "Updated server.ts with tavern map registration and 3 NPC events (innkeeper at bar, patron at table, wanderer near fireplace) at coordinates matching tavern.tmx event layer",
+      "timestamp": "2026-07-23T05:38:08Z"
+    },
+    {
+      "phase": "implement",
+      "step": "Updated player.ts spawn to tavern on connect, added resolveJsonModule to tsconfig.json, verified Vite build succeeds with all tilesets copied and no errors",
+      "message": "Updated player.ts spawn to tavern on connect, added resolveJsonModule to tsconfig.json, verified Vite build succeeds with all tilesets copied and no errors",
+      "timestamp": "2026-07-23T05:38:09Z"
+    },
+    {
+      "phase": "test",
+      "step": "Starting test - verify build and server startup",
+      "message": "Starting test - verify build and server startup",
+      "timestamp": "2026-07-23T05:38:24Z"
+    },
+    {
+      "phase": "test",
+      "step": "Fixed runtime error: params undefined in DynamicEvent.onInit - replaced closure variable with WeakMap-based state",
+      "message": "Fixed runtime error: params undefined in DynamicEvent.onInit - replaced closure variable with WeakMap-based state",
+      "timestamp": "2026-07-23T05:44:49Z"
+    },
+    {
+      "phase": "test",
+      "step": "Verified: all tile assets load (200), no runtime errors, game renders on Chromium",
+      "message": "Verified: all tile assets load (200), no runtime errors, game renders on Chromium",
+      "timestamp": "2026-07-23T05:44:53Z"
+    },
+    {
+      "phase": "review",
+      "step": "Starting review for The Traveller's Tale",
+      "message": "Starting review for The Traveller's Tale",
+      "timestamp": "2026-07-23T07:09:46Z"
+    },
+    {
+      "phase": "review",
+      "step": "Check review: self-contained, no external deps (fixed Google Fonts CDN + node_modules CSS in index.html)",
+      "message": "Check review: self-contained, no external deps (fixed Google Fonts CDN + node_modules CSS in index.html)",
+      "timestamp": "2026-07-23T07:12:54Z"
+    },
+    {
+      "phase": "review",
+      "step": "Check review: game loads in Chromium, canvas visible, all assets 200, no JS errors",
+      "message": "Check review: game loads in Chromium, canvas visible, all assets 200, no JS errors",
+      "timestamp": "2026-07-23T07:12:55Z"
+    },
+    {
+      "phase": "output",
+      "step": "Copied dist/ to ../games/the-travellers-tale/ with assets, index.html, spritesheets, map symlink, README.md",
+      "message": "Copied dist/ to ../games/the-travellers-tale/ with assets, index.html, spritesheets, map symlink, README.md",
+      "timestamp": "2026-07-23T07:17:05Z"
+    },
+    {
+      "phase": "output",
+      "step": "Updated ../games/AGENTS.md output registry with game entry + project structure",
+      "message": "Updated ../games/AGENTS.md output registry with game entry + project structure",
+      "timestamp": "2026-07-23T07:17:23Z"
+    },
+    {
+      "phase": "output",
+      "step": "Created map symlink (map -> assets/data) for production HTTP serving; verified ALL assets load 200, game runs from production location",
+      "message": "Created map symlink (map -> assets/data) for production HTTP serving; verified ALL assets load 200, game runs from production location",
+      "timestamp": "2026-07-23T07:17:27Z"
+    },
+    {
+      "phase": "commit",
+      "step": "Starting commit phase: game in games/ repo, scaffold in game-studio/",
+      "message": "Starting commit phase: game in games/ repo, scaffold in game-studio/",
+      "timestamp": "2026-07-23T07:18:10Z"
+    }
+  ],
+  "quality_levels": {
+    "research": "gold",
+    "brief": "gold",
+    "approve": "gold",
+    "scaffold": "gold",
+    "implement": "gold",
+    "test": "gold",
+    "review": "gold",
+    "output": "gold"
+  },
   "advisory_warnings": [],
-  "parking_lot": []
+  "parking_lot": [],
+  "active_game": "the-travellers-tale"
 }

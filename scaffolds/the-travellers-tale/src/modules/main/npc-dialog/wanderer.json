@@ -1,0 +1,29 @@
+{
+    "name": "Wanderer",
+    "greeting": "You've got the look of someone searching for something. I know that look — I wear it myself.",
+    "pokes": [
+        "The road calls, but the answers are never where you expect them.",
+        "I've walked a thousand miles. Learned a thing or two.",
+        "Still searching. Always searching."
+    ],
+    "topics": [
+        {
+            "id": "purpose",
+            "ask": "What are you searching for?",
+            "response": "A truth I can't name. A place I've never seen but recognize in my dreams. An old woman told me once that everyone has a thread woven into the world's tapestry, and that to find peace, you must follow your thread to its end.",
+            "followUp": "I've been following mine for twenty years. I think I'm getting close."
+        },
+        {
+            "id": "advice",
+            "ask": "Do you have any advice for a fellow traveller?",
+            "response": "Three things: Trust your boots before your map. Trust your gut before a stranger's smile. And when the road splits and neither path looks right... sit down, eat something, and let the answer come to you.",
+            "followUp": "Oh, and carry extra dry socks. A traveller with dry socks can endure almost anything."
+        },
+        {
+            "id": "temple",
+            "ask": "What do you know about the Sunken Temple?",
+            "response": "More than most, less than I'd like. It's a doorway, not a tomb — that's what the old texts say. Built by the Star-Folk who lived here before memory. The lock needs three keys, scattered across the land.",
+            "followUp": "I've found one of them. A shard of obsidian that hums when the moon is full. I think the second lies beneath the capital. As for the third... well, that's what I'm still looking for."
+        }
+    ]
+}

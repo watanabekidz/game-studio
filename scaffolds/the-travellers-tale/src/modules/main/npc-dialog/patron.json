@@ -1,0 +1,29 @@
+{
+    "name": "Patron",
+    "greeting": "Eh? Oh, a new face. Didn't hear you come in. Pull up a stool.",
+    "pokes": [
+        "Hmm? Oh, it's you again.",
+        "If you're buying, I'm talking.",
+        "Ale's good tonight. The innkeeper knows his business."
+    ],
+    "topics": [
+        {
+            "id": "road",
+            "ask": "What's the road like out there?",
+            "response": "Muddy. Cold. Same as always. But there's something in the air that ain't right. The birds have been skittish, and I saw a fox run straight through town at midday — not even looking where it was going.",
+            "followUp": "Something's spooking the wildlife. Never seen it this bad, and I've been on these roads for thirty years."
+        },
+        {
+            "id": "strangers",
+            "ask": "Seen any strangers around?",
+            "response": "Grey cloaks came through about a week ago. Three of 'em. Didn't take rooms, just sat in that corner over there, drinking water and whispering. Paid in old coins — the kind with the jagged edges, from before the unification.",
+            "followUp": "They left at dawn. Headed east toward the temple. Haven't seen 'em since, and good riddance."
+        },
+        {
+            "id": "local",
+            "ask": "What's there to do around here?",
+            "response": "Not much, friend. There's the weekly market, the temple service on Sun's Day, and the fighting pit down by the river if you're feeling lucky. Other than that? You drink, you sleep, you wake up and do it again.",
+            "followUp": "Some folks find that dull. I call it peaceful."
+        }
+    ]
+}
