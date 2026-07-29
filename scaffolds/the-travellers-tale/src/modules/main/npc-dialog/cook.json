@@ -1,0 +1,30 @@
+{
+    "name": "Cook",
+    "greeting": "Ah, a hungry traveller! Best seat in the house is near the kitchen — that's where the smells are. Sit down, sit down!",
+    "pokes": [
+        "You look like you could use a good meal.",
+        "Stew's on! Hope you brought your appetite.",
+        "Coming through! Hot pot, hot pot!",
+        "If you're not eating, you're wasting my time."
+    ],
+    "topics": [
+        {
+            "id": "menu",
+            "ask": "What's cooking today?",
+            "response": "Today's special is a hearty venison stew with root vegetables and a splash of red wine. Been simmering since dawn. Also got fresh bread from the baker, salted pork, and if you're feeling adventurous — my grandmother's mushroom pie recipe.",
+            "followUp": "The mushroom pie's an acquired taste, I'll admit. But those who like it, really like it. I use herbs from the forest edge that most folk can't name."
+        },
+        {
+            "id": "supplies",
+            "ask": "Where do you get your supplies?",
+            "response": "Local farms mostly — good folk, fair prices. But the herbs and wild mushrooms I forage myself. Up at dawn, out to the treeline before the mist burns off. There's a patch of wild garlic behind the old mill that's been growing there since my grandfather's time.",
+            "followUp": "Been harder lately, though. The grey-cloak strangers have been trampling through my foraging grounds. If I find them trampling my morel patch, there'll be trouble."
+        },
+        {
+            "id": "recipe",
+            "ask": "Share a recipe?",
+            "response": "The stew's simple enough. Venison seared hot in a cast iron pot, then slow-cooked with onions, carrots, parsnips, a bundle of thyme, and just enough dark ale to cover. The secret's in the timing — add the root veg too early and it's mush, too late and it's hard as stone.",
+            "followUp": "Oh, and never skip the searing. My old mum used to say: 'If you don't hear it sizzle, you might as well be boiling boots.'"
+        }
+    ]
+}

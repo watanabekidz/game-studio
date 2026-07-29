@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.10" tiledversion="1.11.2" name="tavern-furniture" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
- <image source="tavern-furniture.png" width="1024" height="1024" trans="ff00ff"/>
-</tileset>
+ <image source="tavern-furniture.png" width="1024" height="1024" trans="ff00ff" />
+<tile id="0"><properties><property name="collision" value="true" /></properties></tile><tile id="1"><properties><property name="collision" value="true" /></properties></tile><tile id="2"><properties><property name="collision" value="true" /></properties></tile><tile id="4"><properties><property name="collision" value="true" /></properties></tile><tile id="5"><properties><property name="collision" value="true" /></properties></tile><tile id="24"><properties><property name="collision" value="true" /></properties></tile><tile id="32"><properties><property name="collision" value="true" /></properties></tile></tileset>

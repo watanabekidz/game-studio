@@ -1,0 +1,30 @@
+{
+    "name": "Guard",
+    "greeting": "Halt. Oh, it's just a traveller. Watch your step in here — we've had trouble before.",
+    "pokes": [
+        "Keep your hands where I can see 'em.",
+        "Quiet shift tonight. Good.",
+        "Don't cause any trouble and we'll get along fine.",
+        "I've got my eye on you. And the door."
+    ],
+    "topics": [
+        {
+            "id": "watch",
+            "ask": "What are you guarding?",
+            "response": "The door, mainly. We had a dust-up two weeks back — some mercenaries thought they could skip out on their tab. The innkeeper's a good man; we keep the peace here for a hot meal and a warm bed.",
+            "followUp": "Captain says there's been strange folk on the roads lately. Grey cloaks asking about old ruins. If they show up here, I'm to send word to the garrison immediately."
+        },
+        {
+            "id": "danger",
+            "ask": "Is it dangerous around here?",
+            "response": "The roads are safe enough by day. By night... well, we lock the gates at sundown for good reason. Bandits in the woods, wolves when the winter's hard, and stranger things if you believe the old wives.",
+            "followUp": "The north road's the worst of it. Three caravans gone missing this season alone. Stick to the king's highway and you'll be alright."
+        },
+        {
+            "id": "temple",
+            "ask": "What's your take on the Sunken Temple?",
+            "response": "Orders are to stay clear of it. The captain doesn't even like us talking about it. Old magic, they say — from before the kingdom. I've seen the moss-grown stones from the ridge, and I'll tell you this: nothing grows within a hundred paces of that place. Not even weeds.",
+            "followUp": "If you're thinking of exploring it, I'd advise against it. The last man who went in came out three days later with no memory of what happened and white streaks in his hair. He was twenty-two."
+        }
+    ]
+}

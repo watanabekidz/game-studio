@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "skills": {
+    "rpgjs": {
+      "source": "RSamaium/RPG-JS",
+      "ref": "v5",
+      "sourceType": "github",
+      "skillPath": "skills/rpgjs/SKILL.md",
+      "computedHash": "cd2d1015a90d89ae7aa24eb8797ee47085d3923bd7adbbdb9806b7026d62513e"
+    },
+    "rpgjs-studio": {
+      "source": "RSamaium/RPG-JS",
+      "ref": "v5",
+      "sourceType": "github",
+      "skillPath": "skills/rpgjs-studio/SKILL.md",
+      "computedHash": "459254ce40074a0097ba60d9937dcac7251a9f4c5939852dbb1f4ee0e8532db3"
+    }
+  }
+}

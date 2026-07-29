@@ -5,6 +5,8 @@ import { TavernNpc } from "./event";
 import innkeeperDialog from './npc-dialog/innkeeper.json'
 import patronDialog from './npc-dialog/patron.json'
 import wandererDialog from './npc-dialog/wanderer.json'
+import guardDialog from './npc-dialog/guard.json'
+import cookDialog from './npc-dialog/cook.json'
 
 export default defineModule<RpgServer>({
     player,
@@ -23,21 +25,33 @@ export default defineModule<RpgServer>({
             events: [
                 {
                     id: 'innkeeper',
-                    x: 480,
-                    y: 256,
-                    event: TavernNpc('male', innkeeperDialog)
+                    x: 192,
+                    y: 224,
+                    event: TavernNpc('innkeeper', innkeeperDialog)
                 },
                 {
                     id: 'patron',
-                    x: 192,
-                    y: 416,
-                    event: TavernNpc('female', patronDialog)
+                    x: 384,
+                    y: 320,
+                    event: TavernNpc('patron', patronDialog)
                 },
                 {
                     id: 'wanderer',
-                    x: 640,
-                    y: 160,
-                    event: TavernNpc('male', wandererDialog)
+                    x: 672,
+                    y: 320,
+                    event: TavernNpc('wanderer', wandererDialog)
+                },
+                {
+                    id: 'guard',
+                    x: 64,
+                    y: 128,
+                    event: TavernNpc('guard', guardDialog)
+                },
+                {
+                    id: 'cook',
+                    x: 736,
+                    y: 128,
+                    event: TavernNpc('female-01', cookDialog)
                 }
             ]
         }
